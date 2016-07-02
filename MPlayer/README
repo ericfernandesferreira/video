@@ -1,0 +1,3 @@
+Para fazer o Mplayer rodar video usando mais de um processador você precisa iniciar ele com
+
+-lavdopts threads=8

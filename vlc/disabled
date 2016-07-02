@@ -1,0 +1,77 @@
+checking for LIVE555... no
+configure: WARNING: No package 'live555' found.
+
+checking for DC1394... no
+configure: WARNING: Library libdc1394-2 >= 2.1.0 needed for dc1394 was not found
+
+checking for DV1394... no
+configure: WARNING: Library libraw1394 >= 2.0.1 libavc1394 >= 0.5.3 needed for dv1394 was not found
+
+checking for LINSYS_SDI... no
+configure: WARNING: No package 'zvbi-0.2' found.
+
+checking for OPENCV... no
+configure: WARNING: Library opencv > 2.0 needed for opencv was not found
+
+checking for GNOMEVFS... no
+configure: WARNING: Library gnome-vfs-2.0 needed for gnomevfs was not found
+
+checking for FREERDP... no
+configure: WARNING: Library freerdp >= 1.0.1 needed for freerdp was not found
+
+checking for SID... no
+configure: WARNING: No package 'libsidplay2' found (required for sid).
+
+checking for SHINE... no
+configure: WARNING: Library shine >= 3.0.0 needed for shine was not found
+
+checking for interface/mmal/mmal.h... no
+configure: WARNING: Cannot find development headers for mmal...
+
+checking for SPEEX... no
+configure: WARNING: Library ogg speex >= 1.0.5 needed for speex was not found
+
+checking for X262... no
+checking for X26410B... no
+
+checking for MFX... no
+configure: WARNING: Library libmfx needed for mfx was not found
+
+checking for FLUIDSYNTH... no
+configure: WARNING: Library fluidsynth >= 1.1.2 needed for fluidsynth was not found
+
+checking for ZVBI... no
+configure: WARNING: No package 'zvbi-0.2' found. Enabling the telx module instead.
+
+checking for KATE... no
+configure: WARNING: Library kate >= 0.3.0 needed for kate was not found
+
+checking for TIGER... no
+
+checking for JACK... no
+configure: WARNING: No package 'jack' found, trying jack1 instead
+checking for JACK... no
+configure: WARNING: No package 'jack' found
+No package 'jack' found.
+
+checking for CHROMAPRINT... no
+configure: WARNING: Library libchromaprint >= 0.6.0 needed for chromaprint was not found
+
+checking libtar.h usability... no
+checking libtar.h presence... no
+checking for libtar.h... no
+
+checking for GOOM... no
+configure: WARNING: Library libgoom2 needed for goom was not found
+
+checking for PROJECTM... no
+configure: WARNING: No package 'libprojectM' found.
+
+checking for VSXU... no
+configure: WARNING: No package 'libvsxu' found.
+
+checking for BONJOUR... no
+configure: WARNING: Library avahi-client >= 0.6 needed for bonjour was not found
+
+checking for UPNP... no
+configure: WARNING: Library libupnp needed for upnp was not found
