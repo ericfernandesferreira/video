@@ -27,7 +27,7 @@
 # Modified again by Eric Fernandes Ferreira <candelabrus@gmail.com> for my personal Video/VLC Project
 
 PRGNAM=libebml
-VERSION=${VERSION:-1.3.3}
+VERSION=${VERSION:-1.3.4}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 
