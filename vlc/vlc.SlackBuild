@@ -78,13 +78,17 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-# Patch to compile with ffmpeg > 2.8
+# Patch to compile with ffmpeg 2.8 or later
 patch -p1 < $CWD/vlc-2.2.4-ffmpeg3-1.patch
 
-# Pulseaudio or Jack are auto-detect
+# Patch to compile with qt 5.7 or later
+patch -p1 < $CWD/vlc-2.2.4-qt57.patch
+
+# export QT_SELECT=qt5
+#  --enable-qt=5 \
 
 CFLAGS="$SLKCFLAGS" \
-CXXFLAGS="$SLKCFLAGS" \
+CXXFLAGS="$SLKCFLAGS -std=c++11" \
 ./configure \
   --prefix=/usr \
   --libdir=/usr/lib${LIBDIRSUFFIX} \
