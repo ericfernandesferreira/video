@@ -79,17 +79,17 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
+# Determine what X we're running (the modular X returns the prefix
+# in the next command, while older versions stay silent):
+XPREF=$(pkg-config --variable=prefix x11) || true
+[ "$XPREF" == "" ] && XPREF='/usr/X11R6'
+
 # fix building against samba 4
 zcat $CWD/include-samba-4.0.patch.gz | patch -p1 --verbose
-
-# fix building against openjpeg 2
-sed -i "s|lopenjpeg|lopenmj2|" ./configure
 
 # fix flac playback with embedded album art:
 zcat $CWD/MPlayer.demux_lavf.flac.diff.gz | patch -p1 --verbose
 
-CFLAGS="$SLKCFLAGS" \
-CXXFLAGS="$SLKCFLAGS" \
 ./configure \
   --prefix=/usr \
   --libdir=/usr/lib${LIBDIRSUFFIX} \
@@ -103,11 +103,14 @@ CXXFLAGS="$SLKCFLAGS" \
   --disable-bitmap-font \
   --enable-xvmc \
   --enable-runtime-cpudetection \
-  --extra-cflags="-I/usr/include/openmj2-2.1/" \
   --language="${LANGUAGES}"
 
 make
 make DESTDIR=$PKG install
+
+# Prepare the configfile:
+mkdir -p $PKG/etc/mplayer
+cp etc/example.conf $PKG/etc/mplayer/mplayer.conf.new
 
 cd $PKG/usr/share/mplayer/skins
 tar xvf $CWD/$SKIN-$SKIN_VERSION.tar.bz2
