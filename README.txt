@@ -1,4 +1,4 @@
-Versão do VLC : 2.2.4
+Versão do VLC : 2.2.6
 Versão do MPlayer : 1.3.0
 Source do VLC : http://www.videolan.org/vlc
 Source do MPlayer : http://www.mplayerhq.hu
@@ -21,7 +21,7 @@ sh build-mplayer.sh (para compilar o MPlayer)
 
 -------------------------------------------------------------------------------
 
-VLC Version : 2.2.4
+VLC Version : 2.2.6
 VLC Source : http://www.videolan.org/vlc
 MPlayer Version : 1.3.0
 MPlayer Source : http://www.mplayerhq.hu
