@@ -1,19 +1,3 @@
-# Handle the incoming configuration files:
-config() {
-  for infile in \$1; do
-    NEW="\$infile"
-    OLD="\`dirname \$NEW\`/\`basename \$NEW .new\`"
-    # If there's no config file by that name, mv it over:
-    if [ ! -r \$OLD ]; then
-      mv \$NEW \$OLD
-    elif [ "\`cat \$OLD | md5sum\`" = "\`cat \$NEW | md5sum\`" ]; then
-      # toss the redundant copy
-      rm \$NEW
-    fi
-    # Otherwise, we leave the .new copy for the admin to consider...
-  done
-}
-
 # Installing a bitmap font is considered deprecated; use a TTF font instead.
 # We try to link to an installed TTF font at install time.
 # Configure a default TrueType font to use for the OSD :
@@ -27,9 +11,6 @@ if [ ! -f usr/share/mplayer/subfont.ttf ]; then
     fi
   done
 fi
-
-# Prepare the new configuration file
-config etc/mplayer/mplayer.conf.new
 
 # Update the desktop database:
 if [ -x usr/bin/update-desktop-database ]; then

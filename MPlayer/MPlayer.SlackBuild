@@ -24,7 +24,7 @@
 
 #!/bin/sh
 
-# Modified again by Eric Fernandes Ferreira <candelabrus@gmail.com> for my personal use
+# Modified again by Eric Fernandes Ferreira <candelabrus@gmail.com> for my personal Video Project
 
 PRGNAM=MPlayer
 VERSION=${VERSION:-1.3.0}
@@ -43,7 +43,7 @@ if [ -z "$ARCH" ]; then
 fi
 
 wget -c http://www.mplayerhq.hu/MPlayer/releases/$PRGNAM-$VERSION.tar.xz
-wget -c http://www.mplayerhq.hu/MPlayer/skins/$SKIN-$SKIN_VERSION.tar.bz2
+# wget -c http://www.mplayerhq.hu/MPlayer/skins/$SKIN-$SKIN_VERSION.tar.bz2
 
 CWD=$(pwd)
 TMP=${TMP:-/tmp/SBo}
@@ -79,11 +79,6 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-# Determine what X we're running (the modular X returns the prefix
-# in the next command, while older versions stay silent):
-XPREF=$(pkg-config --variable=prefix x11) || true
-[ "$XPREF" == "" ] && XPREF='/usr/X11R6'
-
 # fix building against samba 4
 zcat $CWD/include-samba-4.0.patch.gz | patch -p1 --verbose
 
@@ -95,27 +90,22 @@ zcat $CWD/MPlayer.demux_lavf.flac.diff.gz | patch -p1 --verbose
   --libdir=/usr/lib${LIBDIRSUFFIX} \
   --mandir=/usr/man \
   --confdir=/etc/mplayer \
-  --enable-gui \
-  --enable-menu \
+  --enable-xvmc \
   --enable-vdpau \
+  --disable-gui \
   --disable-arts \
   --disable-ossaudio \
   --disable-bitmap-font \
-  --enable-xvmc \
   --enable-runtime-cpudetection \
   --language="${LANGUAGES}"
 
 make
 make DESTDIR=$PKG install
 
-# Prepare the configfile:
-mkdir -p $PKG/etc/mplayer
-cp etc/example.conf $PKG/etc/mplayer/mplayer.conf.new
-
-cd $PKG/usr/share/mplayer/skins
-tar xvf $CWD/$SKIN-$SKIN_VERSION.tar.bz2
-ln -s $SKIN default
-cd -
+# cd $PKG/usr/share/mplayer/skins
+# tar xvf $CWD/$SKIN-$SKIN_VERSION.tar.bz2
+# ln -s $SKIN default
+# cd -
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
