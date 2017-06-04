@@ -44,6 +44,7 @@ for dir in \
   libgme \
   vcdimager \
   MPlayer \
+  smplayer \
   ; do
   # Get the package name
   package=$(echo $dir | cut -f2- -d /)
