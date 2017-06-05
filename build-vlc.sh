@@ -41,7 +41,6 @@ for dir in \
   libcuefile \
   libreplaygain \
   libmpcdec \
-  libgme \
   vcdimager \
   vlc \
   ; do
