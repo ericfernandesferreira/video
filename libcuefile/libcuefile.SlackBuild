@@ -57,19 +57,22 @@ find -L . \
 # adding missing include files to CMakeLists.txt
 echo 'INSTALL(FILES ${libcuefile_SOURCE_DIR}/include/cuetools/cuefile.h ${libcuefile_SOURCE_DIR}/include/cuetools/cd.h ${libcuefile_SOURCE_DIR}/include/cuetools/cdtext.h DESTINATION include/cuetools)' >> src/CMakeLists.txt
 
-cmake \
-  -G "Unix Makefiles" \
-  -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
-  -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
-  -DCMAKE_BUILD_TYPE=Release \
-  -DCMAKE_INSTALL_PREFIX=/usr \
-  -DLIB_SUFFIX=${LIBDIRSUFFIX}
-
-make
-make install DESTDIR=$PKG
+mkdir -p build
+cd build
+  cmake \
+    -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DLIB_SUFFIX=${LIBDIRSUFFIX} \
+    -DCMAKE_BUILD_TYPE=Release ..
+  make
+  make install DESTDIR=$PKG
+cd ..
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+
+# Don't package the static libraries:
+rm -f $PKG/usr/lib${LIBDIRSUFFIX}/*.a
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a AUTHORS COPYING README $PKG/usr/doc/$PRGNAM-$VERSION

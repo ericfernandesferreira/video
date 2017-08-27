@@ -32,7 +32,7 @@ SKIN=Blue
 SKIN_VERSION=1.11
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
-LANGUAGES="en"
+LANGUAGES="en pt_BR"
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in

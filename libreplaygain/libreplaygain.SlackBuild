@@ -3,6 +3,8 @@
 # Slackware build script for libreplaygain
 # Written by Šime Ramov <s@ramov.com>
 
+# Modified again by Eric Fernandes Ferreira <candelabrus@gmail.com> for my personal Video/VLC Project
+
 PRGNAM=libreplaygain
 VERSION=${VERSION:-r475}
 BUILD=${BUILD:-1}
@@ -55,19 +57,22 @@ find -L . \
 # adding missing include file to CMakeLists.txt
 echo 'INSTALL(FILES ${libreplaygain_SOURCE_DIR}/include/replaygain/gain_analysis.h DESTINATION include/replaygain)' >> src/CMakeLists.txt
 
-cmake \
-  -G "Unix Makefiles" \
-  -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
-  -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
-  -DCMAKE_BUILD_TYPE=Release \
-  -DCMAKE_INSTALL_PREFIX=/usr \
-  -DLIB_SUFFIX=${LIBDIRSUFFIX}
-
-make
-make install DESTDIR=$PKG
+mkdir -p build
+cd build
+  cmake \
+    -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DLIB_SUFFIX=${LIBDIRSUFFIX} \
+    -DCMAKE_BUILD_TYPE=Release ..
+  make
+  make install DESTDIR=$PKG
+cd ..
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+
+# Don't package the static libraries:
+rm -f $PKG/usr/lib${LIBDIRSUFFIX}/*.a
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
