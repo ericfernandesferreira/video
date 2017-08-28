@@ -56,27 +56,41 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-# sane defaults (hints from Gentoo)
-patch -p1 < $CWD/musepack-tools-475.patch
+patch -p1 < $CWD/01_am-maintainer-mode.patch
+patch -p1 < $CWD/02_link-libm.patch
+patch -p1 < $CWD/03_mpcchap.patch
+patch -p1 < $CWD/04_link-order.patch
+patch -p1 < $CWD/05_visibility.patch
+patch -p1 < $CWD/1001_missing_extern_kw.patch
+patch -p1 < $CWD/add_subdir-objects.patch
+mv configure.in configure.ac
 
-mkdir -p build
-cd build
-  cmake \
-    -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
-    -DCMAKE_INSTALL_PREFIX=/usr \
-    -DLIB_SUFFIX=${LIBDIRSUFFIX} \
-    -DCMAKE_BUILD_TYPE=Release ..
-  make
-  make install DESTDIR=$PKG
-cd ..
+autoreconf -vif
 
-# Don't package the static libraries:
-rm -f $PKG/usr/lib${LIBDIRSUFFIX}/*.a
+CFLAGS="$SLKCFLAGS" \
+CXXFLAGS="$SLKCFLAGS" \
+./configure \
+  --prefix=/usr \
+  --libdir=/usr/lib${LIBDIRSUFFIX} \
+  --sysconfdir=/etc \
+  --localstatedir=/var \
+  --enable-mpcchap \
+  --disable-static \
+  --docdir=/usr/doc/$PRGNAM-$VERSION \
+  --build=$ARCH-slackware-linux
+
+make
+make -C include install DESTDIR=$PKG
+make -C libmpcdec install DESTDIR=$PKG
+
+# Don't package .la files:
+rm -f $PKG/usr/lib${LIBDIRSUFFIX}/*.la
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a docs/mainpage.txt $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 # Remove the svn-related files
