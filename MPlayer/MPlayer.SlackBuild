@@ -99,7 +99,7 @@ zcat $CWD/MPlayer.demux_lavf.flac.diff.gz | patch -p1 --verbose
   --enable-runtime-cpudetection \
   --language="${LANGUAGES}"
 
-make
+make -j5
 make DESTDIR=$PKG install
 
 # cd $PKG/usr/share/mplayer/skins
