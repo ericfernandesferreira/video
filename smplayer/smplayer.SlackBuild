@@ -25,7 +25,7 @@
 # Modified again by Eric Fernandes Ferreira <candelabrus@gmail.com> for my personal Video Project
 
 PRGNAM=smplayer
-VERSION=${VERSION:-17.11.2}
+VERSION=${VERSION:-18.2.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 
@@ -78,8 +78,10 @@ sed -i "/^PREFIX/s/=.*$/=\/usr/;
         s/share\/man/man/g;
         s/^QMAKE_OPTS=/QMAKE_OPTS+=/" Makefile
 
+QT5MAKE=/usr/lib${LIBDIRSUFFIX}/qt5/bin/qmake
+QT5LRELEASE=/usr/lib${LIBDIRSUFFIX}/qt5/bin/lrelease
 QMAKE_OPTS="QMAKE_CXXFLAGS=\"$SLKCFLAGS\"" \
-make QMAKE=qmake-qt5 LRELEASE=lrelease-qt5
+make QMAKE=$QT5MAKE LRELEASE=$QT5LRELEASE
 make install DESTDIR=$PKG
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
