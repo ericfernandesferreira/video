@@ -38,6 +38,7 @@ for dir in \
   libmpeg2 \
   vcdimager \
   MPlayer \
+  mpv \
   smplayer \
   ; do
   # Get the package name
