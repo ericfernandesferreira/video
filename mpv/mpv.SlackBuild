@@ -25,7 +25,7 @@
 # Modified again by Eric Fernandes Ferreira <candelabrus@gmail.com> for my personal Video/VLC Project
 
 PRGNAM=mpv
-VERSION=${VERSION:-0.27.1}
+VERSION=${VERSION:-0.27.2}
 WVERSION=${WVERSION:-1.9.9}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
