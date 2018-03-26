@@ -1,8 +1,9 @@
 Versão do VLC : 2.2.6
 Versão do MPlayer : 1.3.0
-Versão do MPV : 0.27.1
+Versão do MPV : 0.27.2
 Source do VLC : http://www.videolan.org/vlc
 Source do MPlayer : http://www.mplayerhq.hu
+Source do MPV : https://github.com/mpv-player/mpv/
 
 Esse pacote foi construído principalmente para quem quiser usar a última versão do VLC/MPlayer com o Pulseaudio ou Jack Audio.
 
@@ -26,7 +27,8 @@ VLC Version : 2.2.6
 VLC Source : http://www.videolan.org/vlc
 MPlayer Version : 1.3.0
 MPlayer Source : http://www.mplayerhq.hu
-MPV Version : 0.27.1
+MPV Version : 0.27.2
+MPV Source : https://github.com/mpv-player/mpv/
 
 This package was built especially for those who want to use the latest version of VLC/MPlayer with Pulseaudio or Jack Audio.
 
