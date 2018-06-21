@@ -35,6 +35,8 @@ for dir in \
   libdca \
   libdvdcss \
   libdvbpsi \
+  libebml \
+  libmatroska \
   libmpeg2 \
   vcdimager \
   MPlayer \
