@@ -1,0 +1,50 @@
+diff -ruN smplayer-22.2.0/Makefile smplayer-22.2.0-patched/Makefile
+--- smplayer-22.2.0/Makefile	2022-02-27 12:19:52.000000000 -0300
++++ smplayer-22.2.0-patched/Makefile	2022-04-21 18:27:12.572755778 -0300
+@@ -1,11 +1,10 @@
+ 
+-PREFIX=/usr/local
+-#PREFIX=/tmp/smplayer
++PREFIX=/usr
+ 
+ CONF_PREFIX=$(PREFIX)
+ 
+ DATA_PATH=$(PREFIX)/share/smplayer
+-DOC_PATH=$(PREFIX)/share/doc/packages/smplayer
++DOC_PATH=$(PREFIX)/doc/smplayer-22.2.0
+ TRANSLATION_PATH=$(PREFIX)/share/smplayer/translations
+ THEMES_PATH=$(PREFIX)/share/smplayer/themes
+ SHORTCUTS_PATH=$(PREFIX)/share/smplayer/shortcuts
+@@ -14,8 +13,8 @@
+ APPLNK_DIR=$(PREFIX)/share/applications/
+ METAINFO_DIR=$(PREFIX)/share/metainfo/
+ 
+-QMAKE=qmake
+-LRELEASE=lrelease
++QMAKE=qmake-qt5
++LRELEASE=lrelease-qt5
+ 
+ DEFS=DATA_PATH=\\\"$(DATA_PATH)\\\" \
+      TRANSLATION_PATH=\\\"$(TRANSLATION_PATH)\\\" \
+@@ -83,9 +82,9 @@
+ 	-install -d $(DESTDIR)$(METAINFO_DIR)
+ 	./install_appdata.sh $(DESTDIR)$(METAINFO_DIR)/smplayer.appdata.xml
+ 
+-	-install -d $(DESTDIR)$(PREFIX)/share/man/man1/
+-	install -m 644 man/smplayer.1 $(DESTDIR)$(PREFIX)/share/man/man1/
+-	gzip -9 -f $(DESTDIR)$(PREFIX)/share/man/man1/smplayer.1
++	-install -d $(DESTDIR)$(PREFIX)/man/man1/
++	install -m 644 man/smplayer.1 $(DESTDIR)$(PREFIX)/man/man1/
++	gzip -9 -f $(DESTDIR)$(PREFIX)/man/man1/smplayer.1
+ 
+ uninstall:
+ 	-rm -f $(PREFIX)/bin/smplayer
+@@ -100,7 +99,7 @@
+ 	-rm -f $(ICONS_DIR)/16x16/apps/smplayer.png
+ 	-rm -f $(APPLNK_DIR)/smplayer.desktop
+ 	-rm -f $(METAINFO_DIR)/smplayer.appdata.xml
+-	-rm -f $(PREFIX)/share/man/man1/smplayer.1.gz
++	-rm -f $(PREFIX)/man/man1/smplayer.1.gz
+ 	-rmdir $(SHORTCUTS_PATH)/
+ 	-rmdir $(TRANSLATION_PATH)/
+ #	-for file in docs/*/*; do \

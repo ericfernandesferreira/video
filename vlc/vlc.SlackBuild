@@ -30,7 +30,7 @@
 # Modified again by Eric Fernandes Ferreira <candelabrus@gmail.com> for my personal Video/VLC Project
 
 PRGNAM=vlc
-VERSION=${VERSION:-3.0.3}
+VERSION=${VERSION:-3.0.17.4}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 
@@ -84,18 +84,30 @@ CXXFLAGS="$SLKCFLAGS -std=c++11" \
   --prefix=/usr \
   --libdir=/usr/lib${LIBDIRSUFFIX} \
   --sysconfdir=/etc \
-  --mandir=/usr/man \
-  --docdir=/usr/doc/vlc-$VERSION \
   --localstatedir=/var \
+  --mandir=/usr/man \
+  --docdir=/usr/doc/$PRGNAM-$VERSION \
   --enable-aa \
+  --enable-vpx \
+  --enable-sftp \
+  --disable-lua \
   --disable-rpath \
   --disable-debug \
-  --disable-lua \
+  --disable-static \
+  --disable-opencv \
+  --disable-update-check \
   --with-kde-solid=no \
   --build=$ARCH-slackware-linux
 
-make
+make -j17
 make DESTDIR=$PKG install
+
+# Don't package .la files:
+rm -f $PKG/usr/lib${LIBDIRSUFFIX}/*.la
+rm -f $PKG/usr/lib${LIBDIRSUFFIX}/$PRGNAM/*.la
+
+# Don't package the static libraries:
+rm -f $PKG/usr/lib${LIBDIRSUFFIX}/$PRGNAM/*.a
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
@@ -103,15 +115,15 @@ find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | gr
 find $PKG/usr/man -type f -exec gzip -9 {} \;
 for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
 
-mkdir -p $PKG/$(cd /usr/share/vim/vim*/syntax ; pwd)
-cp extras/analyser/vlc.vim $PKG/$(cd /usr/share/vim/vim*/syntax ; pwd)/
-
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a ABOUT-NLS AUTHORS COPYING* ChangeLog INSTALL NEWS README THANKS $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a ABOUT-NLS AUTHORS COPYING* ChangeLog INSTALL NEWS README THANKS \
+  $PKG/usr/doc/$PRGNAM-$VERSION
+rm -rf $PKG/usr/doc/$PRGNAM-$VERSION/libvlc
+cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
-sed -e s/%LIBDIRSUFFIX%/$LIBDIRSUFFIX/g $CWD/doinst.sh.in > $PKG/install/doinst.sh
+cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
 cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.${PKGTYPE:-tgz}

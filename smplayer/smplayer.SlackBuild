@@ -22,15 +22,15 @@
 # OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-# Modified again by Eric Fernandes Ferreira <candelabrus@gmail.com> for my personal Video Project
+# Modified again by Eric Fernandes Ferreira <candelabrus@gmail.com> for my personal Video/VLC Project
 
 PRGNAM=smplayer
-VERSION=${VERSION:-18.5.0}
+VERSION=${VERSION:-22.2.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 
-THEMES=${THEMES:-17.3.0}
-SKINS=${SKINS:-15.2.0}
+THEMES=${THEMES:-20.11.0}
+SKINS=${SKINS:-20.11.0}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -40,9 +40,9 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-wget -c https://astuteinternet.dl.sourceforge.net/project/smplayer/SMPlayer/$VERSION/$PRGNAM-$VERSION.tar.bz2
-wget -c https://phoenixnap.dl.sourceforge.net/project/smplayer/SMPlayer-themes/$THEMES/smplayer-themes-$THEMES.tar.bz2
-wget -c https://phoenixnap.dl.sourceforge.net/project/smplayer/SMPlayer-skins/$SKINS/smplayer-skins-$SKINS.tar.bz2
+wget -c https://ufpr.dl.sourceforge.net/project/smplayer/SMPlayer/$VERSION/$PRGNAM-$VERSION.tar.bz2
+wget -c https://ufpr.dl.sourceforge.net/project/smplayer/SMPlayer-themes/$THEMES/smplayer-themes-$THEMES.tar.bz2
+wget -c https://ufpr.dl.sourceforge.net/project/smplayer/SMPlayer-skins/$SKINS/smplayer-skins-$SKINS.tar.bz2
 
 CWD=$(pwd)
 TMP=${TMP:-/tmp/SBo}
@@ -72,23 +72,24 @@ rm -rf $PRGNAM-$VERSION
 tar xvf $CWD/$PRGNAM-$VERSION.tar.bz2
 cd $PRGNAM-$VERSION
 chown -R root:root .
+find -L . \
+ \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
+  -o -perm 511 \) -exec chmod 755 {} \; -o \
+ \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
+  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-sed -i "/^PREFIX/s/=.*$/=\/usr/;
-        /^DOC_PATH/s/\/.*$/\/doc\/$PRGNAM-$VERSION/;
-        s/share\/man/man/g;
-        s/^QMAKE_OPTS=/QMAKE_OPTS+=/" Makefile
+patch -p1 < $CWD/fixmandir.patch
 
-QT5MAKE=/usr/lib${LIBDIRSUFFIX}/qt5/bin/qmake
-QT5LRELEASE=/usr/lib${LIBDIRSUFFIX}/qt5/bin/lrelease
-QMAKE_OPTS="QMAKE_CXXFLAGS=\"$SLKCFLAGS\"" \
-make QMAKE=$QT5MAKE LRELEASE=$QT5LRELEASE
+CFLAGS="$SLKCFLAGS" \
+CXXFLAGS="$SLKCFLAGS" \
+make -j17
 make install DESTDIR=$PKG
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a *.txt Changelog $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a *.txt *.md $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 cd $TMP
@@ -96,6 +97,7 @@ rm -rf $PRGNAM-themes-$THEMES
 tar xvf $CWD/$PRGNAM-themes-$THEMES.tar.bz2
 cd $PRGNAM-themes-$THEMES
 chown -R root:root .
+sed -i "s/rcc -binary/rcc-qt5 -binary/g" themes/Makefile
 make
 make install PREFIX=/usr DESTDIR=$PKG
 
@@ -107,6 +109,7 @@ rm -rf $PRGNAM-skins-$SKINS
 tar xvf $CWD/$PRGNAM-skins-$SKINS.tar.bz2
 cd $PRGNAM-skins-$SKINS
 chown -R root:root .
+sed -i "s/rcc -binary/rcc-qt5 -binary/g" themes/Makefile
 make
 make install PREFIX=/usr DESTDIR=$PKG
 

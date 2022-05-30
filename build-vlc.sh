@@ -38,10 +38,10 @@ for dir in \
   libebml \
   libmatroska \
   libmpeg2 \
-  libcuefile \
   libreplaygain \
   libmpcdec \
   vcdimager \
+  libplacebo \
   vlc \
   ; do
   # Get the package name

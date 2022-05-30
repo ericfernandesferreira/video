@@ -25,8 +25,8 @@
 # Modified again by Eric Fernandes Ferreira <candelabrus@gmail.com> for my personal Video/VLC Project
 
 PRGNAM=mpv
-VERSION=${VERSION:-0.28.2}
-WVERSION=${WVERSION:-1.9.9}
+VERSION=${VERSION:-0.34.1}
+WVERSION=${WVERSION:-2.0.22}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 
@@ -39,7 +39,7 @@ if [ -z "$ARCH" ]; then
 fi
 
 wget -c https://waf.io/waf-$WVERSION
-wget -c https://github.com/mpv-player/mpv/archive/v$VERSION.tar.gz
+# wget -c https://github.com/mpv-player/mpv/archive/v$VERSION.tar.gz
 
 CWD=$(pwd)
 TMP=${TMP:-/tmp/SBo}
@@ -65,11 +65,13 @@ set -e
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/v$VERSION.tar.gz
-cp $CWD/waf-$WVERSION $PRGNAM-$VERSION/waf
-chmod +x $PRGNAM-$VERSION/waf
-cd $PRGNAM-$VERSION
+rm -rf $PRGNAM
+# tar xvf $CWD/v$VERSION.tar.gz
+git clone https://github.com/mpv-player/mpv.git
+cp $CWD/waf-$WVERSION $PRGNAM/waf
+chmod 755 $PRGNAM/waf
+cd $PRGNAM
+git checkout
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -77,38 +79,34 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-MANUAL="DOCS/*.md DOCS/*.rst DOCS/*.txt"
-
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
-./waf configure \
+python3 ./waf configure \
   --prefix=/usr \
   --libdir=/usr/lib${LIBDIRSUFFIX} \
   --confdir=/etc/$PRGNAM \
+  --mandir=/usr/man \
   --docdir=/usr/doc/$PRGNAM-$VERSION \
-  --enable-dvdread \
+  --enable-dvb \
   --enable-dvdnav \
   --enable-cdda \
   --enable-sdl2 \
   --enable-openal \
   --enable-libmpv-shared
 
-./waf build
-./waf --destdir=$PKG install
-
-for f in $PKG/etc/mpv/*.conf ; do
-  mv $f{,.new}
-done
+python3 ./waf build
+python3 ./waf install --destdir=$PKG
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
+mv $PKG/etc/mpv/encoding-profiles.conf $PKG/etc/mpv/encoding-profiles.conf.new
+
+find $PKG/usr/man -type f -exec gzip -9 {} \;
+for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
+
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a Copyright LICENSE* README* RELEASE_NOTES VERSION $PKG/usr/doc/$PRGNAM-$VERSION
-mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION/manual
-for f in $MANUAL; do
-  cp -a $f $PKG/usr/doc/$PRGNAM-$VERSION/manual/
-done
+cp -a Copyright LICENSE* README* RELEASE* VERSION DOCS/* $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
