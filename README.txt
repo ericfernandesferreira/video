@@ -1,11 +1,11 @@
-Versão do VLC : 3.0.17.4
+Versão do VLC : 3.0.20
 Versão do MPlayer : 1.5
-Versão do MPV : 0.34.1
+Versão do MPV : 0.36.0
 
 Requerimentos:
 - intel ou nvidia
 - slackware64 15.0
-- pacote de audio : http://www.gitlab.com/grinder/audio.git
+- pacote de audio : https://github.com/ericfernandesferreira/audio.git
 
 Esse pacote foi construído principalmente para quem quiser usar a última versão do VLC/MPlayer/MPV com suporte a enconding e decoding via hardware.
 
@@ -19,14 +19,14 @@ sh build-mplayer.sh (para compilar o MPlayer e o MPV)
 
 -------------------------------------------------------------------------------
 
-VLC Version : 3.0.17.4
+VLC Version : 3.0.20
 MPlayer Version : 1.5
-MPV Version : 0.34.1
+MPV Version : 0.36.0
 
 Requirements:
 - intel or nvidia
 - slackware64 15.0
-- audio package : http://www.gitlab.com/grinder/audio.git
+- audio package : https://github.com/ericfernandesferreira/audio.git
 
 This package was built especially for those who want to use the latest version of VLC/MPlayer/MPV with enconding and decoding support.
 
