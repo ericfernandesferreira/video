@@ -41,6 +41,7 @@ for dir in \
   libreplaygain \
   libmpcdec \
   vcdimager \
+  glad \
   libplacebo \
   vlc \
   ; do

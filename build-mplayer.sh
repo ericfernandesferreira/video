@@ -39,6 +39,7 @@ for dir in \
   libmatroska \
   libmpeg2 \
   vcdimager \
+  glad \
   libplacebo \
   mplayer \
   mpv \
