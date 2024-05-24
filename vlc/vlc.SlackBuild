@@ -30,7 +30,7 @@
 # Modified again by Eric Fernandes Ferreira <candelabrus@gmail.com> for my personal Video/VLC Project
 
 PRGNAM=vlc
-VERSION=${VERSION:-3.0.17.4}
+VERSION=${VERSION:-3.0.20}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 
