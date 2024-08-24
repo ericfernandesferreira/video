@@ -6,14 +6,14 @@
 # leave one space after the ':'.
 
        |-----handy-ruler------------------------------------------------------|
-MPlayer: MPlayer (Linux movie player)
-MPlayer:
-MPlayer: MPlayer is a movie player for Linux. It plays most MPEG, VOB, AVI,
-MPlayer: Ogg/OGM, VIVO, ASF/WMA/WMV, QT/MOV/MP4, FLI, RM, NuppelVideo,
-MPlayer: YUV4MPEG, FILM, RoQ, PVA files, supported by many native, XAnim,
-MPlayer: and Win32 DLL codecs. You can watch VideoCD, SVCD, DVD, 3ivx,
-MPlayer: DivX 3/4/5 and even WMV movies, too (without the avifile library).
-MPlayer: MPlayer supports 10 types of subtitles formats: VobSub,
-MPlayer: MicroDVD, SubRip, SubViewer, Sami, VPlayer, RT, SSA, AQTitle, MPsub.
-MPlayer:
-MPlayer: Homepage for MPLayer is http://www.mplayerhq.hu/
+mplayer: MPlayer (Linux movie player)
+mplayer:
+mplayer: MPlayer is a movie player for Linux. It plays most MPEG, VOB, AVI,
+mplayer: Ogg/OGM, VIVO, ASF/WMA/WMV, QT/MOV/MP4, FLI, RM, NuppelVideo,
+mplayer: YUV4MPEG, FILM, RoQ, PVA files, supported by many native, XAnim,
+mplayer: and Win32 DLL codecs. You can watch VideoCD, SVCD, DVD, 3ivx,
+mplayer: DivX 3/4/5 and even WMV movies, too (without the avifile library).
+mplayer: MPlayer supports 10 types of subtitles formats: VobSub,
+mplayer: MicroDVD, SubRip, SubViewer, Sami, VPlayer, RT, SSA, AQTitle, MPsub.
+mplayer:
+mplayer: Homepage for MPLayer is http://www.mplayerhq.hu/
