@@ -41,8 +41,8 @@ if [ -z "$ARCH" ]; then
 fi
 
 wget -c https://github.com/smplayer-dev/smplayer/releases/download/v$VERSION/$PRGNAM-$VERSION.tar.bz2
-wget -c https://ufpr.dl.sourceforge.net/project/smplayer/SMPlayer-themes/$THEMES/smplayer-themes-$THEMES.tar.bz2
-wget -c https://ufpr.dl.sourceforge.net/project/smplayer/SMPlayer-skins/$SKINS/smplayer-skins-$SKINS.tar.bz2
+wget -c https://freefr.dl.sourceforge.net/project/smplayer/SMPlayer-themes/$THEMES/smplayer-themes-$THEMES.tar.bz2
+wget -c https://freefr.dl.sourceforge.net/project/smplayer/SMPlayer-skins/$SKINS/smplayer-skins-$SKINS.tar.bz2
 
 CWD=$(pwd)
 TMP=${TMP:-/tmp/SBo}
