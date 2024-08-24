@@ -1,4 +1,4 @@
-Versão do VLC : 3.0.20
+Versão do VLC : 3.0.21
 Versão do MPlayer : 1.5
 Versão do MPV : 0.36.0
 
@@ -19,7 +19,7 @@ sh build-mplayer.sh (para compilar o MPlayer e o MPV)
 
 -------------------------------------------------------------------------------
 
-VLC Version : 3.0.20
+VLC Version : 3.0.21
 MPlayer Version : 1.5
 MPV Version : 0.36.0
 
