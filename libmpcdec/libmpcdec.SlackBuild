@@ -76,12 +76,10 @@ CXXFLAGS="$SLKCFLAGS" \
   --localstatedir=/var \
   --enable-mpcchap \
   --disable-static \
-  --docdir=/usr/doc/$PRGNAM-$VERSION \
   --build=$ARCH-slackware-linux
 
 make
-make -C include install DESTDIR=$PKG
-make -C libmpcdec install DESTDIR=$PKG
+make install DESTDIR=$PKG
 
 # Don't package .la files:
 rm -f $PKG/usr/lib${LIBDIRSUFFIX}/*.la
@@ -90,11 +88,9 @@ find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | gr
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a docs/mainpage.txt $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a docs/mainpage* libmpcdec/{AUTHORS,COPYING,ChangeLog,README} \
+  $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
-
-# Remove the svn-related files
-rm -Rf $PKG/usr/include/mpc/.svn
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
