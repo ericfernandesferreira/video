@@ -1,47 +1,39 @@
-Versão do VLC : 3.0.3
-Versão do MPlayer : 1.3.0
-Versão do MPV : 0.28.2
-Source do VLC : http://www.videolan.org/vlc
-Source do MPlayer : http://www.mplayerhq.hu
-Source do MPV : https://github.com/mpv-player/mpv/
-
-Esse pacote foi construído principalmente para quem quiser usar a última versão do VLC/MPlayer com o Pulseaudio ou Jack Audio.
+Versão do VLC : 3.0.21
+Versão do MPlayer : 1.5
+Versão do MPV : 0.38.0
 
 Requerimentos:
-- slackware64 14.2 / Current
-- pulseaudio ou jack audio
+- intel ou nvidia
+- slackware64 current
+- pacote de audio : https://github.com/ericfernandesferreira/audio.git
 
-Conteúdo:
-- quase todas as dependências do vlc/mplayer/mpv
+Esse pacote foi construído principalmente para quem quiser usar a última versão do VLC/MPlayer/MPV com suporte a enconding e decoding via hardware.
 
 Como instalar:
-- você precisa baixar o .zip ou clonar o git e então executar o script
+- você precisa clonar com o comando : git clone https://gitlab.com/grinder/video.git
+E então dentro da pasta criada execute o script de instalação
 sh build-vlc.sh (para compilar o VLC)
 sh build-mplayer.sh (para compilar o MPlayer e o MPV)
 
-*(o build detecta automaticamente se você esta usando pulseaudio ou jack)
+*o build detecta automaticamente se você esta usando pulseaudio e o jack audio
 
 -------------------------------------------------------------------------------
 
-VLC Version : 3.0.3
-VLC Source : http://www.videolan.org/vlc
-MPlayer Version : 1.3.0
-MPlayer Source : http://www.mplayerhq.hu
-MPV Version : 0.28.2
-MPV Source : https://github.com/mpv-player/mpv/
-
-This package was built especially for those who want to use the latest version of VLC/MPlayer with Pulseaudio or Jack Audio.
+VLC Version : 3.0.21
+MPlayer Version : 1.5
+MPV Version : 0.38.0
 
 Requirements:
-- slackware64 14.2 / Current
-- pulseaudio or jack audio
+- intel or nvidia
+- slackware64 current
+- audio package : https://github.com/ericfernandesferreira/audio.git
 
-Content:
-- Almost all dependencies of VLC/MPlayer/MPV
+This package was built especially for those who want to use the latest version of VLC/MPlayer/MPV with enconding and decoding support.
 
 How to install:
-- You need to download the .zip or clone git and then run the script
+- you need to clone with command : git clone https://gitlab.com/grinder/video.git
+And then inside the created folder run the installation script
 sh build-vlc.sh (for VLC)
 sh build-mplayer.sh (for MPlayer and MPV)
 
-* (the build automatically detects if you are using pulseaudio or jack)
+*this build automatically detects if you are using pulseaudio and jack audio
