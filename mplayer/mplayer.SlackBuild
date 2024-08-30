@@ -1,7 +1,7 @@
-#!/bin/sh
+#!/bin/bash
 # $Id: MPlayer.SlackBuild,v 1.27 2012/07/01 13:07:08 root Exp root $
 # Copyright 2006, 2007, 2008, 2010, 2011, 2012  Eric Hameleers, Eindhoven, NL
-# Copyright 2013  Patrick J. Volkerding, Sebeka, MN, USA
+# Copyright 2013, 2018  Patrick J. Volkerding, Sebeka, MN, USA
 # All rights reserved.
 #
 #   Permission to use, copy, modify, and distribute this software for
@@ -22,17 +22,16 @@
 #   OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 #   SUCH DAMAGE.
 
-#!/bin/sh
+# Modified again by Eric Fernandes Ferreira <candelabrus@gmail.com> for my personal Video/VLC Project
 
-# Modified again by Eric Fernandes Ferreira <candelabrus@gmail.com> for my personal Video Project
-
-PRGNAM=MPlayer
-VERSION=${VERSION:-1.3.0}
+PRGNAM=mplayer
+SRCNAM=mplayer-export
+VERSION=${VERSION:-1.5}
+SRCVERSION=${SRCVERSION:-2024-08-29}
 SKIN=Blue
-SKIN_VERSION=1.11
+SKIN_VERSION=1.13
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
-LANGUAGES="en pt_BR"
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -42,7 +41,7 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-wget -c http://www.mplayerhq.hu/MPlayer/releases/$PRGNAM-$VERSION.tar.xz
+wget -c http://www.mplayerhq.hu/MPlayer/releases/$PRGNAM-export-snapshot.tar.bz2
 # wget -c http://www.mplayerhq.hu/MPlayer/skins/$SKIN-$SKIN_VERSION.tar.bz2
 
 CWD=$(pwd)
@@ -69,9 +68,9 @@ set -e
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM-$VERSION.tar.xz
-cd $PRGNAM-$VERSION
+rm -rf $SRCNAM-$SRCVERSION
+tar xvf $CWD/$PRGNAM-export-snapshot.tar.bz2
+cd $SRCNAM-$SRCVERSION
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -79,27 +78,26 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-# fix building against samba 4
-zcat $CWD/include-samba-4.0.patch.gz | patch -p1 --verbose
+patch -p0 < $CWD/ffmpeg-7.patch
+patch -p1 < $CWD/include-samba-4.0.patch
 
-# fix flac playback with embedded album art:
-zcat $CWD/MPlayer.demux_lavf.flac.diff.gz | patch -p1 --verbose
-
+CFLAGS="$SLKCFLAGS -Wno-incompatible-pointer-types -Wno-implicit-function-declaration -Wno-int-conversion" \
+CXXFLAGS="$SLKCFLAGS -Wno-incompatible-pointer-types -Wno-implicit-function-declaration -Wno-int-conversion" \
 ./configure \
   --prefix=/usr \
   --libdir=/usr/lib${LIBDIRSUFFIX} \
   --mandir=/usr/man \
   --confdir=/etc/mplayer \
-  --enable-xvmc \
-  --enable-vdpau \
   --disable-gui \
   --disable-arts \
-  --disable-ossaudio \
+  --disable-ffmpeg_a \
+  --enable-libaom-lavc \
   --disable-bitmap-font \
-  --enable-runtime-cpudetection \
-  --language="${LANGUAGES}"
+  --disable-ass-internal \
+  --language=pt_BR \
+  --language-msg=pt_BR
 
-make -j5
+make -j17
 make DESTDIR=$PKG install
 
 # cd $PKG/usr/share/mplayer/skins
@@ -110,12 +108,19 @@ make DESTDIR=$PKG install
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
+install -Dm644 etc/input.conf $PKG/etc/$PRGNAM/input.conf.new
+install -Dm644 etc/codecs.conf $PKG/etc/$PRGNAM/codecs.conf.new
+install -Dm644 etc/example.conf $PKG/etc/$PRGNAM/example.conf.new
+
 find $PKG/usr/man -type f -exec gzip -9 {} \;
 for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a AUTHORS Changelog Copyright LICENSE README VERSION $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a AUTHORS Changelog Copyright LICENSE README $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+
+# Don't need these:
+rm -rf $PKG/usr/lib${LIBDIRSUFFIX}
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc

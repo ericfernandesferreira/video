@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.  Line
+# up the first '|' above the ':' following the base package name, and the '|' on
+# the right side marks the last column you can put a character in.  You must make
+# exactly 11 lines for the formatting to be correct.  It's also customary to
+# leave one space after the ':'.
+
+       |-----handy-ruler------------------------------------------------------|
+mplayer: MPlayer (Linux movie player)
+mplayer:
+mplayer: MPlayer is a movie player for Linux. It plays most MPEG, VOB, AVI,
+mplayer: Ogg/OGM, VIVO, ASF/WMA/WMV, QT/MOV/MP4, FLI, RM, NuppelVideo,
+mplayer: YUV4MPEG, FILM, RoQ, PVA files, supported by many native, XAnim,
+mplayer: and Win32 DLL codecs. You can watch VideoCD, SVCD, DVD, 3ivx,
+mplayer: DivX 3/4/5 and even WMV movies, too (without the avifile library).
+mplayer: MPlayer supports 10 types of subtitles formats: VobSub,
+mplayer: MicroDVD, SubRip, SubViewer, Sami, VPlayer, RT, SSA, AQTitle, MPsub.
+mplayer:
+mplayer: Homepage for MPLayer is http://www.mplayerhq.hu/
