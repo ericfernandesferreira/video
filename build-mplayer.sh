@@ -39,7 +39,7 @@ for dir in \
   libmatroska \
   libmpeg2 \
   vcdimager \
-  MPlayer \
+  mplayer \
   mpv \
   smplayer \
   ; do
