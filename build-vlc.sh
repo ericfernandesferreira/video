@@ -38,7 +38,6 @@ for dir in \
   libebml \
   libmatroska \
   libmpeg2 \
-  libcuefile \
   libreplaygain \
   libmpcdec \
   vcdimager \
