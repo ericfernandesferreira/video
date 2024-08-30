@@ -22,9 +22,7 @@ preserve_perms() {
   config $NEW
 }
 
-for f in etc/mpv/*.conf.new ; do
-  preserve_perms $f
-done
+config etc/mpv/encoding-profiles.conf.new
 
 if [ -x /usr/bin/update-desktop-database ]; then
   /usr/bin/update-desktop-database -q usr/share/applications >/dev/null 2>&1
