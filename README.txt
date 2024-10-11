@@ -1,6 +1,6 @@
 Versão do VLC : 3.0.21
 Versão do MPlayer : 1.5
-Versão do MPV : 0.38.0
+Versão do MPV : 0.39.0
 
 Requerimentos:
 - intel ou nvidia
@@ -21,7 +21,7 @@ sh build-mplayer.sh (para compilar o MPlayer e o MPV)
 
 VLC Version : 3.0.21
 MPlayer Version : 1.5
-MPV Version : 0.38.0
+MPV Version : 0.39.0
 
 Requirements:
 - intel or nvidia
