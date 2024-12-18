@@ -83,8 +83,8 @@ cd build
     --mandir=/usr/man \
     --buildtype=release \
     -Dcdda=enabled \
-    -Ddvdnav=enabled \
     -Dsdl2=enabled \
+    -Ddvdnav=enabled \
     -Dopenal=enabled \
     ..
 

@@ -89,7 +89,6 @@ CXXFLAGS="$SLKCFLAGS -std=c++11" \
   --docdir=/usr/doc/$PRGNAM-$VERSION \
   --enable-aa \
   --enable-vpx \
-  --enable-mfx \
   --enable-sftp \
   --disable-lua \
   --disable-rpath \
