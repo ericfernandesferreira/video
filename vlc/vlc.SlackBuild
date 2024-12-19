@@ -78,6 +78,15 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
+patch -p1 < $CWD/vlc-2.1.0-fix-libtremor-libs.patch # build system
+patch -p1 < $CWD/vlc-3.0.6-fdk-aac-2.0.0.patch # bug 672290
+patch -p1 < $CWD/vlc-3.0.11.1-configure_lua_version.patch
+patch -p1 < $CWD/vlc-3.0.18-drop-minizip-dep.patch
+patch -p1 < $CWD/vlc-3.0.21-freerdp-2.patch # bug 919296, 590164
+patch -p1 < $CWD/vlc-3.0.21-vaapi-without-ffmepg4.patch # bug 864721, thx Fedora
+
+autoreconf -vif
+
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS -std=c++11" \
 ./configure \
@@ -95,8 +104,8 @@ CXXFLAGS="$SLKCFLAGS -std=c++11" \
   --disable-debug \
   --disable-static \
   --disable-opencv \
-  --disable-update-check \
   --with-kde-solid=no \
+  --disable-update-check \
   --build=$ARCH-slackware-linux
 
 make -j17
