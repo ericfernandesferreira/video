@@ -82,10 +82,14 @@ cd build
     --localstatedir=/var \
     --mandir=/usr/man \
     --buildtype=release \
+    -Dlibmpv=true \
     -Dcdda=enabled \
     -Dsdl2=enabled \
+    -Dpulse=enabled \
     -Ddvdnav=enabled \
     -Dopenal=enabled \
+    -Dpipewire=enabled \
+    -Dsdl2-audio=enabled \
     ..
 
   meson configure
