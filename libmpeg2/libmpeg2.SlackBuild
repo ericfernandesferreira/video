@@ -37,7 +37,7 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-wget -c http://libmpeg2.sourceforge.net/files/$PRGNAM-$VERSION.tar.gz
+wget -c https://download.videolan.org/contrib/libmpeg2/$PRGNAM-$VERSION.tar.gz
 
 CWD=$(pwd)
 TMP=${TMP:-/tmp/SBo}
