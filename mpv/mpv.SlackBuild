@@ -84,12 +84,13 @@ cd build
     --buildtype=release \
     -Dlibmpv=true \
     -Dcdda=enabled \
-    -Dsdl2=enabled \
     -Dpulse=enabled \
     -Ddvdnav=enabled \
     -Dopenal=enabled \
     -Dpipewire=enabled \
     -Dsdl2-audio=enabled \
+    -Dsdl2-video=enabled \
+    -Dsdl2-gamepad=enabled \
     ..
 
   meson configure
@@ -99,8 +100,6 @@ cd ..
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
-
-mv $PKG/etc/mpv/encoding-profiles.conf $PKG/etc/mpv/encoding-profiles.conf.new
 
 find $PKG/usr/man -type f -exec gzip -9 {} \;
 for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
