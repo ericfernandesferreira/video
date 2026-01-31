@@ -8,4 +8,3 @@
 +libtremor_plugin_la_LIBADD = $(VORBIS_LIBS) $(OGG_LIBS)
  EXTRA_LTLIBRARIES += libtremor_plugin.la
  codec_LTLIBRARIES += $(LTLIBtremor)
- 
